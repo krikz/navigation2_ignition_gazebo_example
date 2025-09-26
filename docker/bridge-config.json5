@@ -1,0 +1,30 @@
+{
+  "connect": {
+    "endpoints": ["tcp/zenoh-router:7447"]
+  },
+  "plugins": {
+    "ros2dds": {
+      "domain": 0,
+      "scope": "robots/virtual_robot",
+      "allow": {
+        "publishers": [
+          "/robot_cam",
+          "rt/robot_cam",
+          "/camera_info",
+          "/odom",
+          "/diff_drive_base_controller/odom",
+          "/map",
+          "/map_metadata",
+          "/global_costmap/costmap",
+          "/scan",
+          "/tf",
+          "/tf_static"
+        ],
+        "subscribers": [
+          "/cmd_vel",
+          "/cmd_vel_nav"
+        ]
+      }
+    }
+  }
+}

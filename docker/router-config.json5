@@ -1,0 +1,23 @@
+{
+    "mode": "router",
+    "connect": {
+        "endpoints": [
+            "tcp/zenoh.robbox.online:7447"
+        ]
+    },
+    "plugins": {
+        "rest": {
+            "http_port": 8000
+        },
+        "storage_manager": {
+            "storages": {
+                "robot_data": {
+                    "key_expr": "robots/**",
+                    "volume": {
+                        "id": "memory"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,62 @@
+version: '3.9'
+
+networks:
+  zenoh-net:
+    driver: bridge
+    name: zenoh-net
+
+services:
+  zenoh-router:
+    image: eclipse/zenoh:1.3.4
+    container_name: zenoh-router
+    ports:
+      - "7447:7447/tcp"
+      - "8000:8000"
+    volumes:
+      - ./router-config.json5:/router-config.json5
+    command: ["-c", "/router-config.json5"]
+    networks:
+      - zenoh-net
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8000/@/local/router || exit 1"]
+      interval: 5s
+      timeout: 10s
+      retries: 20
+      start_period: 30s
+    restart: unless-stopped
+
+  zenoh-bridge-dds:
+    image: eclipse/zenoh-bridge-dds:1.3.4
+    container_name: zenoh-bridge-dds
+    volumes:
+      - ./bridge-config.json5:/bridge-config.json5      
+      - /dev/shm:/dev/shm
+    command: ["-c", "/bridge-config.json5"]
+    networks:
+      - zenoh-net
+    privileged: true
+    environment:
+      - RUST_LOG=debug
+    depends_on:
+      zenoh-router:
+        condition: service_healthy
+    restart: unless-stopped
+
+  virtual-robot:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: virtual-robot
+    environment:
+      - DISPLAY=${DISPLAY}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    networks:
+      - zenoh-net
+    privileged: true
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      zenoh-bridge-dds:
+        condition: service_started
+    restart: unless-stopped
