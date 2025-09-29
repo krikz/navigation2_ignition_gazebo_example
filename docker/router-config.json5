@@ -7,7 +7,7 @@
     },
     "connect": {
         "endpoints": [
-            "tcp/zenoh.robbox.online:7447"
+            "tcp/localhost:7447"
         ]
     },
     "plugins": {

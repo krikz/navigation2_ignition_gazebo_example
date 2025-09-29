@@ -41,11 +41,8 @@ services:
       context: ..
       dockerfile: docker/Dockerfile
     container_name: virtual-robot
-    environment:
-      - DISPLAY=${DISPLAY}
-    volumes:        
+    volumes:
       - /dev/shm:/dev/shm
-      - /tmp/.X11-unix:/tmp/.X11-unix
     networks:
       - zenoh-net
     privileged: true
