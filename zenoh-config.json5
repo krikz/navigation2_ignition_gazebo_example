@@ -11,27 +11,27 @@
   "plugins": {
     "dds": {
       "domain_id": 0,
-      "key_expr": "robots/virtual_robot/**",
+      "key_expr": "robots/VR00003/**",
       "publishers": [
         {
-          "key_expr": "robots/virtual_robot/sensors/**",
+          "key_expr": "robots/VR00003/sensors/**",
           "topic": "rt/sensors/*",
           "type": "sensor_msgs/*"
         },
         {
-          "key_expr": "robots/virtual_robot/state/**",
+          "key_expr": "robots/VR00003/state/**",
           "topic": "rt/state/*",
           "type": "std_msgs/*"
         }
       ],
       "subscriptions": [
         {
-          "key_expr": "robots/virtual_robot/control/navigation/target",
+          "key_expr": "robots/VR00003/control/navigation/target",
           "topic": "rt/navigation/target",
           "type": "geometry_msgs/PoseStamped"
         },
         {
-          "key_expr": "robots/virtual_robot/control/manual",
+          "key_expr": "robots/VR00003/control/manual",
           "topic": "rt/manual/cmd_vel",
           "type": "geometry_msgs/Twist"
         }
@@ -40,7 +40,7 @@
     "storage_manager": {
       "storages": {
         "robot_data": {
-          "key_expr": "robots/virtual_robot/**",
+          "key_expr": "robots/VR00003/**",
           "volume": {
             "id": "memory"
           }
