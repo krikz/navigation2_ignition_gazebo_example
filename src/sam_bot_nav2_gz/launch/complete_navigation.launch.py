@@ -179,5 +179,16 @@ def generate_launch_description():
             waiting_toolbox,
             waiting_navigation,
             waiting_success,
+            Node(
+            package='image_transport',
+            executable='republish',
+            name='cam_compress_node',
+            arguments=['raw', 'compressed'],
+            remappings=[
+                ('in', '/robot_cam'),
+                ('out/compressed', '/robot_cam/compressed')
+            ],
+            output='screen'
+        ),
         ]
     )
