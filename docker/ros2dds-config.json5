@@ -9,6 +9,7 @@
       "allow": {
         "publishers": [
           "/robot_cam",
+          "/robot_cam/compressed",
           "rt/robot_cam",
           "/camera_info",
           "/odom",
